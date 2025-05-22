@@ -1,9 +1,8 @@
 ---
 import MySiteLayout from '../layouts/MySiteLayout.astro';
 
-import 'swiper/css'; // Core
-import 'swiper/css/navigation'; // Navigation module
-import 'swiper/css/pagination'; // Pagination module
+import 'swiper/css';
+import 'swiper/css/pagination';
 ---
 
 <MySiteLayout>
@@ -15,17 +14,9 @@ import 'swiper/css/pagination'; // Pagination module
       <div class="swiper-slide">Slide 1</div>
       <div class="swiper-slide">Slide 2</div>
       <div class="swiper-slide">Slide 3</div>
-      ...
     </div>
     <!-- If we need pagination -->
     <div class="swiper-pagination"></div>
-
-    <!-- If we need navigation buttons -->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-
-    <!-- If we need scrollbar -->
-    <div class="swiper-scrollbar"></div>
   </div>
 </MySiteLayout>
 
@@ -49,29 +40,15 @@ import 'swiper/css/pagination'; // Pagination module
 
 <script>
   import Swiper from 'swiper';
-  import { Navigation, Pagination } from 'swiper/modules';
+  import { Pagination } from 'swiper/modules';
 
   const swiper = new Swiper('.swiper', {
-    // configure Swiper to use modules
-    modules: [Navigation, Pagination],
-    // Optional parameters
+    modules: [Pagination],
     direction: 'horizontal',
     loop: true,
 
-    // If we need pagination
     pagination: {
       el: '.swiper-pagination',
-    },
-
-    // Navigation arrows
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-
-    // And if we need scrollbar
-    scrollbar: {
-      el: '.swiper-scrollbar',
     },
   });
 </script>
