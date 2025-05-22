@@ -1,8 +1,82 @@
 ---
 import MySiteLayout from '../layouts/MySiteLayout.astro';
-
 import 'swiper/css';
 import 'swiper/css/pagination';
+
+import { getImage } from 'astro:assets';
+import heroDesktop01 from '../assets/top/top-hero-slide01-desktop.png';
+import heroMobile01 from '../assets/top/top-hero-slide01-mobile.png';
+import heroDesktop02 from '../assets/top/top-hero-slide02-desktop.png';
+import heroMobile02 from '../assets/top/top-hero-slide02-mobile.png';
+import heroDesktop03 from '../assets/top/top-hero-slide03-desktop.png';
+import heroMobile03 from '../assets/top/top-hero-slide03-mobile.png';
+import heroDesktop04 from '../assets/top/top-hero-slide04-desktop.png';
+import heroMobile04 from '../assets/top/top-hero-slide04-mobile.png';
+import heroDesktop05 from '../assets/top/top-hero-slide05-desktop.png';
+import heroMobile05 from '../assets/top/top-hero-slide05-mobile.png';
+import heroDesktop06 from '../assets/top/top-hero-slide06-desktop.png';
+import heroMobile06 from '../assets/top/top-hero-slide06-mobile.png';
+
+const heroDesktopWebp01 = await getImage({
+  src: heroDesktop01,
+  format: 'webp',
+  widths: [1280, 1920],
+});
+const heroMobileWebp01 = await getImage({
+  src: heroMobile01,
+  format: 'webp',
+  widths: [360, 640],
+});
+const heroDesktopWebp02 = await getImage({
+  src: heroDesktop02,
+  format: 'webp',
+  widths: [1280, 1920],
+});
+const heroMobileWebp02 = await getImage({
+  src: heroMobile02,
+  format: 'webp',
+  widths: [360, 640],
+});
+const heroDesktopWebp03 = await getImage({
+  src: heroDesktop03,
+  format: 'webp',
+  widths: [1280, 1920],
+});
+const heroMobileWebp03 = await getImage({
+  src: heroMobile03,
+  format: 'webp',
+  widths: [360, 640],
+});
+const heroDesktopWebp04 = await getImage({
+  src: heroDesktop04,
+  format: 'webp',
+  widths: [1280, 1920],
+});
+const heroMobileWebp04 = await getImage({
+  src: heroMobile04,
+  format: 'webp',
+  widths: [360, 640],
+});
+const heroDesktopWebp05 = await getImage({
+  src: heroDesktop05,
+  format: 'webp',
+  widths: [1280, 1920],
+});
+const heroMobileWebp05 = await getImage({
+  src: heroMobile05,
+  format: 'webp',
+  widths: [360, 640],
+});
+const heroDesktopWebp06 = await getImage({
+  src: heroDesktop06,
+  format: 'webp',
+  widths: [1280, 1920],
+});
+const heroMobileWebp06 = await getImage({
+  src: heroMobile06,
+  format: 'webp',
+  widths: [360, 640],
+});
 ---
 
 <MySiteLayout>
@@ -11,10 +85,212 @@ import 'swiper/css/pagination';
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
+      <div class="swiper-slide">
+        <picture>
+          <source
+            srcset={heroDesktopWebp01.srcSet.attribute}
+            media="(min-width: 1024px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobileWebp01.srcSet.attribute}
+            media="(max-width: 1023px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroDesktop01.src}
+            media="(min-width: 1024px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobile01.src}
+            media="(max-width: 1023px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <img
+            src={heroMobile01.src}
+            alt="ヒーローイメージ01"
+            width={heroMobile01.width}
+            height={heroMobile01.height}
+          />
+        </picture>
+      </div>
+      <div class="swiper-slide">
+        <picture>
+          <source
+            srcset={heroDesktopWebp02.srcSet.attribute}
+            media="(min-width: 1024px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobileWebp02.srcSet.attribute}
+            media="(max-width: 1023px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroDesktop02.src}
+            media="(min-width: 1024px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobile02.src}
+            media="(max-width: 1023px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <img
+            src={heroMobile02.src}
+            alt="ヒーローイメージ02"
+            width={heroMobile02.width}
+            height={heroMobile02.height}
+          />
+        </picture>
+      </div>
+      <div class="swiper-slide">
+        <picture>
+          <source
+            srcset={heroDesktopWebp03.srcSet.attribute}
+            media="(min-width: 1024px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobileWebp03.srcSet.attribute}
+            media="(max-width: 1023px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroDesktop03.src}
+            media="(min-width: 1024px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobile03.src}
+            media="(max-width: 1023px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <img
+            src={heroMobile03.src}
+            alt="ヒーローイメージ03"
+            width={heroMobile03.width}
+            height={heroMobile03.height}
+          />
+        </picture>
+      </div>
+      <div class="swiper-slide">
+        <picture>
+          <source
+            srcset={heroDesktopWebp04.srcSet.attribute}
+            media="(min-width: 1024px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobileWebp04.srcSet.attribute}
+            media="(max-width: 1023px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroDesktop04.src}
+            media="(min-width: 1024px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobile04.src}
+            media="(max-width: 1023px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <img
+            src={heroMobile04.src}
+            alt="ヒーローイメージ04"
+            width={heroMobile04.width}
+            height={heroMobile04.height}
+          />
+        </picture>
+      </div>
+      <div class="swiper-slide">
+        <picture>
+          <source
+            srcset={heroDesktopWebp05.srcSet.attribute}
+            media="(min-width: 1024px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobileWebp05.srcSet.attribute}
+            media="(max-width: 1023px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroDesktop05.src}
+            media="(min-width: 1024px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobile05.src}
+            media="(max-width: 1023px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <img
+            src={heroMobile05.src}
+            alt="ヒーローイメージ05"
+            width={heroMobile05.width}
+            height={heroMobile05.height}
+          />
+        </picture>
+      </div>
+      <div class="swiper-slide">
+        <picture>
+          <source
+            srcset={heroDesktopWebp06.srcSet.attribute}
+            media="(min-width: 1024px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobileWebp06.srcSet.attribute}
+            media="(max-width: 1023px)"
+            type="image/webp"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroDesktop06.src}
+            media="(min-width: 1024px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <source
+            srcset={heroMobile06.src}
+            media="(max-width: 1023px)"
+            type="image/png"
+            sizes="100vw"
+          />
+          <img
+            src={heroMobile06.src}
+            alt="ヒーローイメージ06"
+            width={heroMobile06.width}
+            height={heroMobile06.height}
+          />
+        </picture>
+      </div>
     </div>
+
     <!-- If we need pagination -->
     <div class="swiper-pagination"></div>
   </div>
@@ -26,7 +302,7 @@ import 'swiper/css/pagination';
 
   .swiper {
     width: 100%;
-    height: 300px;
+    height: auto;
   }
 
   .swiper-slide {
@@ -35,6 +311,12 @@ import 'swiper/css/pagination';
     justify-content: center;
     background-color: #f0f0f0;
     font-size: 24px;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
   }
 </style>
 
