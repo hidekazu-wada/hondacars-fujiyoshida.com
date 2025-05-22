@@ -2,6 +2,7 @@
 import MySiteLayout from '../layouts/MySiteLayout.astro';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 import { getImage } from 'astro:assets';
 
@@ -133,19 +134,45 @@ const slides = await generateSlides();
       object-fit: cover;
     }
   }
+  /* 既存の @import より下に追記 */
+  @keyframes hero-zoom-out {
+    0% {
+      transform: scale(1.12);
+    } /* 開始は少し拡大 */
+    100% {
+      transform: scale(1);
+    } /* 終了で等倍 */
+  }
+
+  /* 全スライドで定義だけして “停止” */
+  .swiper-slide img {
+    animation: hero-zoom-out 7.5s ease-in-out forwards; //時間を変更する場合はここを変更（delay + speed）
+    animation-play-state: paused; /* ← デフォルト停止 */
+    transform-origin: center center;
+  }
+
+  /* 表示中（active）のスライドだけ再生 */
+  .swiper-slide-active img {
+    animation-play-state: running;
+  }
 </style>
 
 <script>
   import Swiper from 'swiper';
-  import { Pagination } from 'swiper/modules';
+  import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 
   const swiper = new Swiper('.swiper', {
-    modules: [Pagination],
-    direction: 'horizontal',
+    modules: [Pagination, Autoplay, EffectFade],
+    effect: 'fade',
     loop: true,
 
     pagination: {
       el: '.swiper-pagination',
     },
+    autoplay: {
+      delay: 5000, //1枚の表示時間
+      disableOnInteraction: false,
+    },
+    speed: 2500, //フェードのスピード
   });
 </script>
