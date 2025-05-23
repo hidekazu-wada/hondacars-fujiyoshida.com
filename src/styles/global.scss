@@ -10,5 +10,14 @@ html {
         font-family: $font-noto-sans-jp;
         font-weight: 500;
         color: $base_color_1;
+        &.is-loading {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        &.is-loaded {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 }

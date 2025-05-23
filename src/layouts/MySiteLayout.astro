@@ -22,7 +22,13 @@ import '../styles/global.scss';
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="is-loading">
     <slot />
   </body>
 </html>
+
+<script>
+  window.addEventListener('load', () => {
+    document.body.classList.add('is-loaded');
+  });
+</script>

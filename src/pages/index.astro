@@ -107,7 +107,7 @@ const slides = await generateSlides();
     <div class="swiper-pagination"></div>
     <h1 id="main-title">
       <span class="line" id="line1">幸せなくらしを、</span><br />
-      <span class="line" id="line2">もっと、ずっと</span>
+      <span class="line" id="line2">もっと、ずっと。</span>
     </h1>
   </div>
 </MySiteLayout>
@@ -125,8 +125,6 @@ const slides = await generateSlides();
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0;
-    font-size: 24px;
     img {
       display: block;
       width: 100%;
@@ -190,14 +188,53 @@ const slides = await generateSlides();
   }
 
   :global(.hero-bullet.is-active) {
-    background: var(--accent, #c40000);
+    background: $base_color_2;
   }
 
   #main-title {
     position: absolute;
-    left: 0;
-    top: 0;
+    top: spx(257);
+    left: spx(60);
     z-index: 1;
+    @include tablet-up {
+      top: spx(257) * 0.75;
+      left: spx(60) * 0.75;
+    }
+    @include desktop-up {
+      top: ppx(520);
+      left: ppx(186);
+    }
+    #line1 {
+      color: $base_color_2;
+      font-size: spx(55);
+      font-weight: 700;
+      line-height: 155%;
+      @include tablet-up {
+        font-size: spx(55) * 0.75;
+      }
+      @include desktop-up {
+        font-size: ppx(95);
+      }
+    }
+    #line2 {
+      color: $base_color_2;
+      font-size: spx(81);
+      font-weight: 700;
+      line-height: 155%;
+      margin-top: spx(-12);
+      @include tablet-up {
+        font-size: spx(81) * 0.75;
+        margin-top: spx(-12) * 0.75;
+      }
+      @include desktop-up {
+        font-size: ppx(145);
+        margin-top: ppx(-20);
+      }
+    }
+    span {
+      display: inline;
+      transition: opacity 0.3s;
+    }
   }
 </style>
 
@@ -233,33 +270,50 @@ const slides = await generateSlides();
       span.style.opacity = '0';
       element.appendChild(span);
     });
+    element.style.display = 'block';
   }
 
-  window.addEventListener('DOMContentLoaded', async () => {
+  // GSAPアニメーション部分
+  function startGsapAnimation() {
     const line1 = document.getElementById('line1');
     const line2 = document.getElementById('line2');
     if (line1) wrapChars(line1);
     if (line2) wrapChars(line2);
 
-    // 1行目アニメーション
-    await gsap
-      .to('#line1 span', {
-        opacity: 1,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: 'power2.out',
-      })
-      .then();
-
-    // 一呼吸（0.5秒）おく
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // 2行目アニメーション
-    gsap.to('#line2 span', {
+    gsap.to('#line1 span', {
       opacity: 1,
-      duration: 0.5,
-      stagger: 0.05,
+      duration: 1, //1文字が出現するまでの時間
+      stagger: 0.12, //次の文字が出現するまでの時間
       ease: 'power2.out',
+      onComplete: () => {
+        setTimeout(() => {
+          gsap.to('#line2 span', {
+            opacity: 1,
+            duration: 1, //1文字が出現するまでの時間
+            stagger: 0.14, //次の文字が出現するまでの時間
+            ease: 'power2.out',
+          });
+        }, 500); //次の行が出現するまでの時間
+      },
     });
-  });
+  }
+
+  // is-loadedクラスが付与されたらアニメーション開始
+  if (document.body.classList.contains('is-loaded')) {
+    startGsapAnimation();
+  } else {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class' &&
+          document.body.classList.contains('is-loaded')
+        ) {
+          observer.disconnect();
+          startGsapAnimation();
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  }
 </script>
