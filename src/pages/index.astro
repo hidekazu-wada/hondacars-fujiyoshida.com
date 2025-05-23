@@ -63,10 +63,7 @@ const slides = await generateSlides();
 ---
 
 <MySiteLayout>
-  テスト表示
-  <!-- Slider main container -->
   <div class="swiper">
-    <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       {
         slides.map((slide) => (
@@ -107,9 +104,11 @@ const slides = await generateSlides();
         ))
       }
     </div>
-
-    <!-- If we need pagination -->
     <div class="swiper-pagination"></div>
+    <h1>
+      <p>幸せなくらしを、</p>
+      <p>もっと、ずっと</p>
+    </h1>
   </div>
 </MySiteLayout>
 
@@ -135,26 +134,70 @@ const slides = await generateSlides();
       object-fit: cover;
     }
   }
-  /* 既存の @import より下に追記 */
   @keyframes hero-zoom-out {
     0% {
       transform: scale(1.12);
-    } /* 開始は少し拡大 */
+    }
     100% {
       transform: scale(1);
-    } /* 終了で等倍 */
+    }
   }
 
-  /* 全スライドで定義だけして “停止” */
+  // swiper
   .swiper-slide img {
-    animation: hero-zoom-out 7.5s ease-in-out forwards; //時間を変更する場合はここを変更（delay + speed）
-    animation-play-state: paused; /* ← デフォルト停止 */
+    animation: hero-zoom-out 7.5s ease-in-out forwards;
+    animation-play-state: paused;
     transform-origin: center center;
   }
 
-  /* 表示中（active）のスライドだけ再生 */
   .swiper-slide-active img {
     animation-play-state: running;
+  }
+
+  :global(.swiper-pagination) {
+    position: absolute;
+    left: spx(60) !important;
+    bottom: spx(48) !important;
+    display: flex;
+    gap: spx(14);
+    @include tablet-up {
+      gap: spx(14) * 0.75;
+      left: spx(60) * 0.75 !important;
+      bottom: spx(48) * 0.75 !important;
+    }
+    @include desktop-up {
+      gap: ppx(15);
+      left: ppx(157) !important;
+      bottom: ppx(75) !important;
+    }
+  }
+
+  :global(.hero-bullet) {
+    display: block;
+    width: spx(30);
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+    background: #fff;
+    opacity: 1;
+    transition: transform 0.3s;
+    cursor: pointer;
+    @include tablet-up {
+      width: spx(30) * 0.75;
+    }
+    @include desktop-up {
+      width: ppx(40);
+    }
+  }
+
+  :global(.hero-bullet.is-active) {
+    background: var(--accent, #c40000);
+  }
+
+  h1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
   }
 </style>
 
@@ -169,6 +212,9 @@ const slides = await generateSlides();
 
     pagination: {
       el: '.swiper-pagination',
+      clickable: true,
+      bulletClass: 'hero-bullet',
+      bulletActiveClass: 'is-active',
     },
     autoplay: {
       delay: 5000, //1枚の表示時間
