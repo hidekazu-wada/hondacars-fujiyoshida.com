@@ -105,9 +105,9 @@ const slides = await generateSlides();
       }
     </div>
     <div class="swiper-pagination"></div>
-    <h1>
-      <p>幸せなくらしを、</p>
-      <p>もっと、ずっと</p>
+    <h1 id="main-title">
+      <span class="line" id="line1">幸せなくらしを、</span><br />
+      <span class="line" id="line2">もっと、ずっと</span>
     </h1>
   </div>
 </MySiteLayout>
@@ -193,7 +193,7 @@ const slides = await generateSlides();
     background: var(--accent, #c40000);
   }
 
-  h1 {
+  #main-title {
     position: absolute;
     left: 0;
     top: 0;
@@ -204,6 +204,7 @@ const slides = await generateSlides();
 <script>
   import Swiper from 'swiper';
   import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
+  import gsap from 'gsap';
 
   const swiper = new Swiper('.swiper', {
     modules: [Pagination, Autoplay, EffectFade],
@@ -221,5 +222,44 @@ const slides = await generateSlides();
       disableOnInteraction: false,
     },
     speed: 2500, //フェードのスピード
+  });
+
+  function wrapChars(element: HTMLElement) {
+    const text = element.textContent ?? '';
+    element.innerHTML = '';
+    text.split('').forEach((char) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      span.style.opacity = '0';
+      element.appendChild(span);
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    if (line1) wrapChars(line1);
+    if (line2) wrapChars(line2);
+
+    // 1行目アニメーション
+    await gsap
+      .to('#line1 span', {
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: 'power2.out',
+      })
+      .then();
+
+    // 一呼吸（0.5秒）おく
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // 2行目アニメーション
+    gsap.to('#line2 span', {
+      opacity: 1,
+      duration: 0.5,
+      stagger: 0.05,
+      ease: 'power2.out',
+    });
   });
 </script>
