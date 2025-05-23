@@ -1,11 +1,178 @@
 ---
 import MySiteLayout from '../layouts/MySiteLayout.astro';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+
+import { getImage } from 'astro:assets';
+
+// 画像データの配列化
+const imageData = Array.from({ length: 6 }, (_, i) => ({
+  number: String(i + 1).padStart(2, '0'),
+  alt: `ヒーローイメージ${i + 1}`,
+}));
+
+const heroImages = await Promise.all(
+  imageData.map(async ({ number, alt }) => ({
+    desktop: await import(
+      `../assets/top/top-hero-slide${number}-desktop.png`
+    ).then((m) => m.default),
+    mobile: await import(
+      `../assets/top/top-hero-slide${number}-mobile.png`
+    ).then((m) => m.default),
+    alt,
+  }))
+);
+
+// WebP画像の生成
+const generateWebpImages = async (desktop: any, mobile: any) => {
+  const desktopWebp = await getImage({
+    src: desktop,
+    format: 'webp',
+    widths: [1280, 1920],
+  });
+  const mobileWebp = await getImage({
+    src: mobile,
+    format: 'webp',
+    widths: [360, 640],
+  });
+  return { desktopWebp, mobileWebp };
+};
+
+// スライドの生成
+const generateSlides = async () => {
+  const slides = await Promise.all(
+    heroImages.map(async (image) => {
+      const { desktopWebp, mobileWebp } = await generateWebpImages(
+        image.desktop,
+        image.mobile
+      );
+      return {
+        desktop: image.desktop,
+        mobile: image.mobile,
+        desktopWebp,
+        mobileWebp,
+        alt: image.alt,
+      };
+    })
+  );
+  return slides;
+};
+
+const slides = await generateSlides();
 ---
 
 <MySiteLayout>
-  <h1>Astro</h1>
+  <!-- Slider main container -->
+  <div class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      {
+        slides.map((slide) => (
+          <div class="swiper-slide">
+            <picture>
+              <source
+                srcset={slide.desktopWebp.srcSet.attribute}
+                media="(min-width: 1024px)"
+                type="image/webp"
+                sizes="100vw"
+              />
+              <source
+                srcset={slide.mobileWebp.srcSet.attribute}
+                media="(max-width: 1023px)"
+                type="image/webp"
+                sizes="100vw"
+              />
+              <source
+                srcset={slide.desktop.src}
+                media="(min-width: 1024px)"
+                type="image/png"
+                sizes="100vw"
+              />
+              <source
+                srcset={slide.mobile.src}
+                media="(max-width: 1023px)"
+                type="image/png"
+                sizes="100vw"
+              />
+              <img
+                src={slide.mobile.src}
+                alt={slide.alt}
+                width={slide.mobile.width}
+                height={slide.mobile.height}
+              />
+            </picture>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+  </div>
 </MySiteLayout>
 
 <style lang="scss">
+  @import '../styles/functions.scss';
   @import '../styles/mixins.scss';
+
+  .swiper {
+    width: 100%;
+    height: auto;
+  }
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    font-size: 24px;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+  /* 既存の @import より下に追記 */
+  @keyframes hero-zoom-out {
+    0% {
+      transform: scale(1.12);
+    } /* 開始は少し拡大 */
+    100% {
+      transform: scale(1);
+    } /* 終了で等倍 */
+  }
+
+  /* 全スライドで定義だけして “停止” */
+  .swiper-slide img {
+    animation: hero-zoom-out 7.5s ease-in-out forwards; //時間を変更する場合はここを変更（delay + speed）
+    animation-play-state: paused; /* ← デフォルト停止 */
+    transform-origin: center center;
+  }
+
+  /* 表示中（active）のスライドだけ再生 */
+  .swiper-slide-active img {
+    animation-play-state: running;
+  }
 </style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
+
+  const swiper = new Swiper('.swiper', {
+    modules: [Pagination, Autoplay, EffectFade],
+    effect: 'fade',
+    loop: true,
+
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    autoplay: {
+      delay: 5000, //1枚の表示時間
+      disableOnInteraction: false,
+    },
+    speed: 2500, //フェードのスピード
+  });
+</script>
