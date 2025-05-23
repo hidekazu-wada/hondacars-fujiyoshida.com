@@ -13,5 +13,8 @@
     "destyle.css": "^4.0.1",
     "sass": "^1.88.0",
     "swiper": "^11.2.7"
+  },
+  "devDependencies": {
+    "@astrojs/ts-plugin": "^1.10.4"
   }
 }
