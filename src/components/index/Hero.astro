@@ -1,0 +1,319 @@
+---
+import MySiteLayout from '../../layouts/MySiteLayout.astro';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+
+import { getImage } from 'astro:assets';
+
+// 画像データの配列化
+const imageData = Array.from({ length: 6 }, (_, i) => ({
+  number: String(i + 1).padStart(2, '0'),
+  alt: `ヒーローイメージ${i + 1}`,
+}));
+
+const heroImages = await Promise.all(
+  imageData.map(async ({ number, alt }) => ({
+    desktop: await import(
+      `../../assets/top/top-hero-slide${number}-desktop.png`
+    ).then((m) => m.default),
+    mobile: await import(
+      `../../assets/top/top-hero-slide${number}-mobile.png`
+    ).then((m) => m.default),
+    alt,
+  }))
+);
+
+// WebP画像の生成
+const generateWebpImages = async (desktop: any, mobile: any) => {
+  const desktopWebp = await getImage({
+    src: desktop,
+    format: 'webp',
+    widths: [1280, 1920],
+  });
+  const mobileWebp = await getImage({
+    src: mobile,
+    format: 'webp',
+    widths: [360, 640],
+  });
+  return { desktopWebp, mobileWebp };
+};
+
+// スライドの生成
+const generateSlides = async () => {
+  const slides = await Promise.all(
+    heroImages.map(async (image) => {
+      const { desktopWebp, mobileWebp } = await generateWebpImages(
+        image.desktop,
+        image.mobile
+      );
+      return {
+        desktop: image.desktop,
+        mobile: image.mobile,
+        desktopWebp,
+        mobileWebp,
+        alt: image.alt,
+      };
+    })
+  );
+  return slides;
+};
+
+const slides = await generateSlides();
+---
+
+<MySiteLayout>
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {
+        slides.map((slide) => (
+          <div class="swiper-slide">
+            <picture>
+              <source
+                srcset={slide.desktopWebp.srcSet.attribute}
+                media="(min-width: 1024px)"
+                type="image/webp"
+                sizes="100vw"
+              />
+              <source
+                srcset={slide.mobileWebp.srcSet.attribute}
+                media="(max-width: 1023px)"
+                type="image/webp"
+                sizes="100vw"
+              />
+              <source
+                srcset={slide.desktop.src}
+                media="(min-width: 1024px)"
+                type="image/png"
+                sizes="100vw"
+              />
+              <source
+                srcset={slide.mobile.src}
+                media="(max-width: 1023px)"
+                type="image/png"
+                sizes="100vw"
+              />
+              <img
+                src={slide.mobile.src}
+                alt={slide.alt}
+                width={slide.mobile.width}
+                height={slide.mobile.height}
+              />
+            </picture>
+          </div>
+        ))
+      }
+    </div>
+    <div class="swiper-pagination"></div>
+    <h1 id="main-title">
+      <span class="line" id="line1">幸せなくらしを、</span><br />
+      <span class="line" id="line2">もっと、ずっと。</span>
+    </h1>
+  </div>
+</MySiteLayout>
+
+<style lang="scss">
+  @import '../../styles/functions.scss';
+  @import '../../styles/mixins.scss';
+
+  .swiper {
+    width: 100%;
+    height: auto;
+  }
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+  @keyframes hero-zoom-out {
+    0% {
+      transform: scale(1.12);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  // swiper
+  .swiper-slide img {
+    animation: hero-zoom-out 7.5s ease-in-out forwards;
+    animation-play-state: paused;
+    transform-origin: center center;
+  }
+
+  .swiper-slide-active img {
+    animation-play-state: running;
+  }
+
+  :global(.swiper-pagination) {
+    position: absolute;
+    left: spx(60) !important;
+    bottom: spx(48) !important;
+    display: flex;
+    gap: spx(14);
+    @include tablet-up {
+      gap: spx(14) * 0.75;
+      left: spx(60) * 0.75 !important;
+      bottom: spx(48) * 0.75 !important;
+    }
+    @include desktop-up {
+      gap: ppx(15);
+      left: ppx(157) !important;
+      bottom: ppx(75) !important;
+    }
+  }
+
+  :global(.hero-bullet) {
+    display: block;
+    width: spx(30);
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+    background: #fff;
+    opacity: 1;
+    transition: transform 0.3s;
+    cursor: pointer;
+    @include tablet-up {
+      width: spx(30) * 0.75;
+    }
+    @include desktop-up {
+      width: ppx(40);
+    }
+  }
+
+  :global(.hero-bullet.is-active) {
+    background: $base_color_2;
+  }
+
+  #main-title {
+    position: absolute;
+    top: spx(257);
+    left: spx(60);
+    z-index: 1;
+    @include tablet-up {
+      top: spx(257) * 0.75;
+      left: spx(60) * 0.75;
+    }
+    @include desktop-up {
+      top: ppx(520);
+      left: ppx(186);
+    }
+    #line1 {
+      color: $base_color_2;
+      font-size: spx(55);
+      font-weight: 700;
+      line-height: 155%;
+      @include tablet-up {
+        font-size: spx(55) * 0.75;
+      }
+      @include desktop-up {
+        font-size: ppx(95);
+      }
+    }
+    #line2 {
+      color: $base_color_2;
+      font-size: spx(81);
+      font-weight: 700;
+      line-height: 155%;
+      margin-top: spx(-12);
+      @include tablet-up {
+        font-size: spx(81) * 0.75;
+        margin-top: spx(-12) * 0.75;
+      }
+      @include desktop-up {
+        font-size: ppx(145);
+        margin-top: ppx(-20);
+      }
+    }
+    span {
+      display: inline;
+      transition: opacity 0.3s;
+    }
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
+  import gsap from 'gsap';
+
+  const swiper = new Swiper('.swiper', {
+    modules: [Pagination, Autoplay, EffectFade],
+    effect: 'fade',
+    loop: true,
+
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      bulletClass: 'hero-bullet',
+      bulletActiveClass: 'is-active',
+    },
+    autoplay: {
+      delay: 5000, //1枚の表示時間
+      disableOnInteraction: false,
+    },
+    speed: 2500, //フェードのスピード
+  });
+
+  function wrapChars(element: HTMLElement) {
+    const text = element.textContent ?? '';
+    element.innerHTML = '';
+    text.split('').forEach((char) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      span.style.opacity = '0';
+      element.appendChild(span);
+    });
+    element.style.display = 'block';
+  }
+
+  // GSAPアニメーション部分
+  function startGsapAnimation() {
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    if (line1) wrapChars(line1);
+    if (line2) wrapChars(line2);
+
+    gsap.to('#line1 span', {
+      opacity: 1,
+      duration: 1, //1文字が出現するまでの時間
+      stagger: 0.12, //次の文字が出現するまでの時間
+      ease: 'power2.out',
+      onComplete: () => {
+        setTimeout(() => {
+          gsap.to('#line2 span', {
+            opacity: 1,
+            duration: 1, //1文字が出現するまでの時間
+            stagger: 0.14, //次の文字が出現するまでの時間
+            ease: 'power2.out',
+          });
+        }, 500); //次の行が出現するまでの時間
+      },
+    });
+  }
+
+  // is-loadedクラスが付与されたらアニメーション開始
+  if (document.body.classList.contains('is-loaded')) {
+    startGsapAnimation();
+  } else {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class' &&
+          document.body.classList.contains('is-loaded')
+        ) {
+          observer.disconnect();
+          startGsapAnimation();
+        }
+      });
+    });
+    observer.observe(document.body, { attributes: true });
+  }
+</script>
