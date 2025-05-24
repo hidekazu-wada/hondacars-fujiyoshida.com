@@ -29,12 +29,12 @@ const generateWebpImages = async (desktop: any, mobile: any) => {
   const desktopWebp = await getImage({
     src: desktop,
     format: 'webp',
-    widths: [1280, 1920],
+    widths: [768, 1024, 1536, 2048],
   });
   const mobileWebp = await getImage({
     src: mobile,
     format: 'webp',
-    widths: [360, 640],
+    widths: [375, 750],
   });
   return { desktopWebp, mobileWebp };
 };
@@ -71,25 +71,25 @@ const slides = await generateSlides();
             <picture>
               <source
                 srcset={slide.desktopWebp.srcSet.attribute}
-                media="(min-width: 1024px)"
+                media="(min-width: 768px)"
                 type="image/webp"
                 sizes="100vw"
               />
               <source
                 srcset={slide.mobileWebp.srcSet.attribute}
-                media="(max-width: 1023px)"
+                media="(max-width: 767px)"
                 type="image/webp"
                 sizes="100vw"
               />
               <source
                 srcset={slide.desktop.src}
-                media="(min-width: 1024px)"
+                media="(min-width: 768px)"
                 type="image/png"
                 sizes="100vw"
               />
               <source
                 srcset={slide.mobile.src}
-                media="(max-width: 1023px)"
+                media="(max-width: 767px)"
                 type="image/png"
                 sizes="100vw"
               />
@@ -157,14 +157,14 @@ const slides = await generateSlides();
     left: spx(60) !important;
     bottom: spx(48) !important;
     display: flex;
-    gap: spx(14);
+    gap: spx(14) !important;
     @include tablet-up {
-      gap: spx(14) * 0.75;
-      left: spx(60) * 0.75 !important;
-      bottom: spx(48) * 0.75 !important;
+      gap: ppx(15 * $pc-to-tab-ratio) !important;
+      left: ppx(157 * $pc-to-tab-ratio) !important;
+      bottom: ppx(75 * $pc-to-tab-ratio) !important;
     }
     @include desktop-up {
-      gap: ppx(15);
+      gap: ppx(15) !important;
       left: ppx(157) !important;
       bottom: ppx(75) !important;
     }
@@ -180,7 +180,7 @@ const slides = await generateSlides();
     transition: transform 0.3s;
     cursor: pointer;
     @include tablet-up {
-      width: spx(30) * 0.75;
+      width: ppx(40 * $pc-to-tab-ratio);
     }
     @include desktop-up {
       width: ppx(40);
@@ -197,8 +197,8 @@ const slides = await generateSlides();
     left: spx(60);
     z-index: 1;
     @include tablet-up {
-      top: spx(257) * 0.75;
-      left: spx(60) * 0.75;
+      top: ppx(520 * $pc-to-tab-ratio);
+      left: ppx(186 * $pc-to-tab-ratio);
     }
     @include desktop-up {
       top: ppx(520);
@@ -210,7 +210,7 @@ const slides = await generateSlides();
       font-weight: 700;
       line-height: 155%;
       @include tablet-up {
-        font-size: spx(55) * 0.75;
+        font-size: ppx(95 * $pc-to-tab-ratio);
       }
       @include desktop-up {
         font-size: ppx(95);
@@ -223,8 +223,8 @@ const slides = await generateSlides();
       line-height: 155%;
       margin-top: spx(-12);
       @include tablet-up {
-        font-size: spx(81) * 0.75;
-        margin-top: spx(-12) * 0.75;
+        font-size: ppx(145 * $pc-to-tab-ratio);
+        margin-top: ppx(-20 * $pc-to-tab-ratio);
       }
       @include desktop-up {
         font-size: ppx(145);

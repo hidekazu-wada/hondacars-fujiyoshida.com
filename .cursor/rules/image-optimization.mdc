@@ -18,7 +18,7 @@ import imageSrc from '../assets/path/to/image.png';
 const imageWebp = await getImage({
   src: imageSrc,
   format: 'webp',
-  widths: [360, 640, 1280, 1920],
+  widths: [375, 750, 1024, 1536, 2048], //スマホ + レティナ,タブレット〜PCレティナ
 });
 ---
 
