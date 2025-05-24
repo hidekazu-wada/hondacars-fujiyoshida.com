@@ -7,6 +7,19 @@ html {
     body {
         @include zen-kaku-gothic-new-regular;
         background-color: #f0f0f0;
+        // モバイル向け背景設定
+        background-image: var(--bg-mobile-fallback), var(--bg-mobile);
+        background-attachment: scroll;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        // タブレット以上での固定背景設定
+        @include tablet-up {
+            background-image: var(--bg-desktop-fallback), var(--bg-desktop);
+            background-attachment: fixed;
+        }
+
         font-family: $font-noto-sans-jp;
         font-weight: 500;
         color: $base_color_1;

@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 画像最適化ルール
+
+## レスポンシブ画像の実装パターン
+
+PC・モバイルで同じ画像を使用し、デバイス幅に応じて最適化された画像を配信する場合：
+
+```astro
+---
+import { getImage } from 'astro:assets';
+import imageSrc from '../assets/path/to/image.png';
+
+// WebP画像の生成（スマホ、タブレット、デスクトップ、レティナ対応）
+const imageWebp = await getImage({
+  src: imageSrc,
+  format: 'webp',
+  widths: [360, 640, 1280, 1920],
+});
+---
+
+<picture>
+  <source
+    srcset={imageWebp.srcSet.attribute}
+    media="(min-width: 1024px)"
+    type="image/webp"
+    sizes="50vw"
+  />
+  <source
+    srcset={imageWebp.srcSet.attribute}
+    media="(max-width: 1023px)"
+    type="image/webp"
+    sizes="100vw"
+  />
+  <source
+    srcset={imageSrc.src}
+    media="(min-width: 1024px)"
+    type="image/png"
+    sizes="50vw"
+  />
+  <img
+    src={imageSrc.src}
+    alt="画像の説明"
+    width={imageSrc.width}
+    height={imageSrc.height}
+  />
+</picture>
+```
+
+## 画像最適化の要件
+
+- **getImageコンポーネント**を必ず使用
+- **WebP形式**で最適化
+- **widths指定**: `[360, 640, 1280, 1920]`（スマホ、タブレット、デスクトップ、レティナ対応）
+- **pictureタグ**でレスポンシブ対応
+- **sizes属性**はデザインに応じて適切に調整
+- **フォールバック**として元画像も用意
+- **alt属性**を必ず記述
+
+## 重要事項
+
+- **画像は必ずgetImageで最適化してpictureタグで実装**
+- 画像は `src/assets/` で管理し、Astroの画像最適化機能を活用
+- パフォーマンス向上のため、各デバイスに最適なサイズ・形式で配信

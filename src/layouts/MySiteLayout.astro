@@ -1,5 +1,21 @@
 ---
 import '../styles/global.scss';
+import { getImage } from 'astro:assets';
+import desktopBg from '../assets/global/desktop-bg.png';
+import mobileBg from '../assets/global/mobile-bg.png';
+
+// 最適化された画像を生成
+const desktopWebp = await getImage({
+  src: desktopBg,
+  format: 'webp',
+  widths: [1280, 1920],
+});
+
+const mobileWebp = await getImage({
+  src: mobileBg,
+  format: 'webp',
+  widths: [360, 640],
+});
 ---
 
 <html lang="ja">
@@ -23,6 +39,42 @@ import '../styles/global.scss';
     />
   </head>
   <body class="is-loading">
+    <div class="bg-wrapper">
+      <picture>
+        <source
+          srcset={desktopWebp.srcSet.attribute}
+          media="(min-width:1024px)"
+          sizes="100vw"
+          type="image/webp"
+        />
+        <source
+          srcset={mobileWebp.srcSet.attribute}
+          media="(max-width:1023px)"
+          sizes="100vw"
+          type="image/webp"
+        />
+        <source
+          srcset={desktopBg.src}
+          media="(min-width:1024px)"
+          type="image/png"
+          sizes="100vw"
+        />
+        <source
+          srcset={mobileBg.src}
+          media="(max-width:1023px)"
+          type="image/png"
+          sizes="100vw"
+        />
+        <img
+          src={mobileBg.src}
+          width={mobileBg.width}
+          height={mobileBg.height}
+          alt="ヒーローイメージ"
+          loading="eager"
+          decoding="async"
+        />
+      </picture>
+    </div>
     <slot />
   </body>
 </html>
@@ -32,3 +84,22 @@ import '../styles/global.scss';
     document.body.classList.add('is-loaded');
   });
 </script>
+
+<style lang="scss">
+  @use '../styles/functions.scss' as *;
+  @import '../styles/mixins.scss';
+  .bg-wrapper {
+    width: 100vw;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: $base_color_1;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>
