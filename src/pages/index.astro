@@ -33,12 +33,6 @@ const sectionVisualWebp = await getImage({
           <p class="mission__desc">
             ホンダ自動車販売グループは「人ありき、そして躍進」というスローガンのもと、人と企業の永続的な成長を目指しています。お客さまはもちろんのこと、社員や社員のご家族、そして地域から必要とされ愛される会社づくりをするべく、その礎となる「人」をとても大切にしています。
           </p>
-          <a href="/philosophy/" class="mission__link">
-            企業理念はこちら
-            <span class="mission__link-icon" aria-hidden="true">
-              <ArrowIcon />
-            </span>
-          </a>
         </div>
 
         <figure class="mission__figure">
@@ -70,6 +64,12 @@ const sectionVisualWebp = await getImage({
             />
           </picture>
         </figure>
+        <a href="/philosophy/" class="mission__link">
+          企業理念はこちら
+          <span class="mission__link-icon" aria-hidden="true">
+            <ArrowIcon />
+          </span>
+        </a>
       </div>
     </div>
   </section>
@@ -80,9 +80,13 @@ const sectionVisualWebp = await getImage({
   @import '../styles/mixins.scss';
 
   .mission {
+    position: relative;
+    padding: spx(130) 0;
     @include tablet-up {
+      padding: spx(130) * 0.75 0;
     }
     @include desktop-up {
+      padding: ppx(271) 0 ppx(316);
     }
 
     &__inner {
@@ -94,17 +98,25 @@ const sectionVisualWebp = await getImage({
 
     &__header {
       color: $base_color_2;
+      margin-left: spx(56);
 
       @include tablet-up {
+        margin-left: spx(56) * 0.75;
       }
       @include desktop-up {
+        margin-left: ppx(1307);
       }
     }
 
     &__title {
+      display: flex;
+      flex-direction: column;
+      gap: spx(15);
       @include tablet-up {
+        gap: spx(15) * 0.75;
       }
       @include desktop-up {
+        gap: ppx(20);
       }
 
       &-main {
@@ -135,19 +147,36 @@ const sectionVisualWebp = await getImage({
         font-weight: 500;
         line-height: 100%;
         letter-spacing: spx(2.7);
+        display: flex;
+        align-items: center;
+        gap: spx(23);
 
         @include tablet-up {
           font-size: spx(27) * 0.75;
           letter-spacing: spx(2.7) * 0.75;
+          gap: spx(23) * 0.75;
         }
 
         @include desktop-up {
           font-size: ppx(35);
           letter-spacing: ppx(3.5);
+          gap: ppx(30);
         }
-        @include tablet-up {
-        }
-        @include desktop-up {
+        &::before {
+          content: '';
+          display: block;
+          width: spx(153);
+          height: 1px;
+          background-color: $base_color_2;
+          margin-left: spx(4);
+          @include tablet-up {
+            width: spx(153) * 0.75;
+            margin-left: spx(4) * 0.75;
+          }
+          @include desktop-up {
+            width: ppx(200);
+            margin-left: ppx(11);
+          }
         }
       }
     }
@@ -160,9 +189,15 @@ const sectionVisualWebp = await getImage({
     }
 
     &__text {
+      margin-top: spx(50);
+      margin-left: spx(60);
       @include tablet-up {
+        margin-top: spx(50) * 0.75;
+        margin-left: spx(60) * 0.75;
       }
       @include desktop-up {
+        margin-left: ppx(1307);
+        margin-top: ppx(83);
       }
     }
 
@@ -194,19 +229,62 @@ const sectionVisualWebp = await getImage({
       font-size: spx(31);
       font-weight: 500;
       line-height: 180%;
+      margin-top: spx(50);
+      width: spx(600);
 
       @include tablet-up {
         font-size: spx(31) * 0.75;
         line-height: 180%;
+        margin-top: spx(50) * 0.75;
+        width: spx(600) * 0.75;
       }
 
       @include desktop-up {
         font-size: ppx(35);
         line-height: 200%;
+        margin-top: ppx(97);
+        width: ppx(874);
       }
       @include tablet-up {
       }
       @include desktop-up {
+      }
+    }
+
+    &-icon {
+      --icon-size: #{spx(31)};
+
+      @include tablet-up {
+        --icon-size: #{spx(31) * 0.75};
+      }
+      @include desktop-up {
+        --icon-size: #{ppx(31)};
+      }
+    }
+
+    &__figure {
+      text-align: center;
+      @include tablet-up {
+      }
+      @include desktop-up {
+        text-align: unset;
+        position: absolute;
+        top: ppx(200);
+        left: 0;
+      }
+      img {
+        width: spx(602);
+        height: auto;
+        margin-top: spx(70);
+
+        @include tablet-up {
+          width: spx(602) * 0.75;
+          margin-top: spx(70) * 0.75;
+        }
+        @include desktop-up {
+          width: ppx(1000);
+          margin-top: 0;
+        }
       }
     }
 
@@ -216,48 +294,45 @@ const sectionVisualWebp = await getImage({
       font-weight: 500;
       line-height: 100%;
       letter-spacing: spx(1.75);
+      display: flex;
+      align-items: center;
+      gap: spx(40);
+      width: spx(484);
+      height: spx(120);
+      padding-left: spx(80);
+      border: 1px solid $base_color_white;
+      transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+      margin-top: spx(70);
+      margin-inline: auto;
 
       @include tablet-up {
         font-size: spx(35) * 0.75;
         letter-spacing: spx(1.75) * 0.75;
+        width: spx(484) * 0.75;
+        height: spx(120) * 0.75;
+        gap: spx(40) * 0.75;
+        padding-left: spx(80) * 0.75;
+        margin-top: spx(70) * 0.75;
       }
 
       @include desktop-up {
         font-size: ppx(35);
         letter-spacing: ppx(1.75);
-      }
-      @include tablet-up {
-      }
-      @include desktop-up {
-      }
-
-      &-icon {
-        --icon-size: #{spx(31)};
-
-        @include tablet-up {
-          --icon-size: #{spx(23)};
-        }
-        @include desktop-up {
-          --icon-size: #{ppx(28)};
-        }
-      }
-    }
-
-    &__figure {
-      @include tablet-up {
-      }
-      @include desktop-up {
+        width: ppx(484);
+        height: ppx(120);
+        gap: ppx(40);
+        padding-left: ppx(80);
+        margin-left: ppx(1307);
+        margin-top: ppx(40);
+        margin-inline: unset;
       }
 
-      img {
-        width: spx(602);
-        height: auto;
-
-        @include tablet-up {
-          width: spx(602) * 0.75;
-        }
-        @include desktop-up {
-          width: ppx(1000);
+      @include hover {
+        &:hover {
+          background-color: $base_color_2;
+          border-color: $base_color_2;
         }
       }
     }
