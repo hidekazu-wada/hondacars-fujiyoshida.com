@@ -28,11 +28,21 @@ const { color = 'white', strokeWidth = 4, className = '' } = Astro.props;
     stroke-linejoin="round"></path>
 </svg>
 
-<style>
+<style lang="scss">
+  @import '../../styles/functions.scss';
+  @import '../../styles/mixins.scss';
+
   .arrow-icon {
-    width: var(--icon-size, 32px);
+    width: spx(31);
     height: auto;
-    display: inline-block;
+    display: block;
     vertical-align: middle;
+
+    @include tablet-up {
+      width: spx(31) * 0.75;
+    }
+    @include desktop-up {
+      width: ppx(31);
+    }
   }
 </style>
