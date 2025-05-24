@@ -1,8 +1,265 @@
 ---
 import MySiteLayout from '../layouts/MySiteLayout.astro';
 import Hero from '../components/index/Hero.astro';
+import sectionVisualImage from '../assets/top/mission/section-visual.png';
+import { getImage } from 'astro:assets';
+import ArrowIcon from '../components/icons/ArrowIcon.astro';
+
+// WebP画像の生成
+const sectionVisualWebp = await getImage({
+  src: sectionVisualImage,
+  format: 'webp',
+  widths: [360, 640, 1280, 1920],
+});
 ---
 
 <MySiteLayout>
   <Hero />
+  <section class="mission">
+    <div class="mission__inner">
+      <header class="mission__header">
+        <h2 class="mission__title">
+          <span class="mission__title-main">MISSION</span>
+          <span class="mission__title-sub">企業理念</span>
+        </h2>
+      </header>
+
+      <div class="mission__content">
+        <div class="mission__text">
+          <h3 class="mission__catch">
+            みんなに愛される<br />
+            会社づくり
+          </h3>
+          <p class="mission__desc">
+            ホンダ自動車販売グループは「人ありき、そして躍進」というスローガンのもと、人と企業の永続的な成長を目指しています。お客さまはもちろんのこと、社員や社員のご家族、そして地域から必要とされ愛される会社づくりをするべく、その礎となる「人」をとても大切にしています。
+          </p>
+          <a href="/philosophy/" class="mission__link">
+            企業理念はこちら
+            <span class="mission__link-icon" aria-hidden="true">
+              <ArrowIcon />
+            </span>
+          </a>
+        </div>
+
+        <figure class="mission__figure">
+          <picture>
+            <source
+              srcset={sectionVisualWebp.srcSet.attribute}
+              media="(min-width: 1024px)"
+              type="image/webp"
+              sizes="50vw"
+            />
+            <source
+              srcset={sectionVisualWebp.srcSet.attribute}
+              media="(max-width: 1023px)"
+              type="image/webp"
+              sizes="100vw"
+            />
+            <source
+              srcset={sectionVisualImage.src}
+              media="(min-width: 1024px)"
+              type="image/png"
+              sizes="50vw"
+            />
+            <img
+              src={sectionVisualImage.src}
+              alt="社員4名がオフィスでパソコンを見ながら笑顔で仕事をしている様子"
+              class="mission__visual"
+              width={sectionVisualImage.width}
+              height={sectionVisualImage.height}
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+  </section>
 </MySiteLayout>
+
+<style lang="scss">
+  @import '../styles/functions.scss';
+  @import '../styles/mixins.scss';
+
+  .mission {
+    @include tablet-up {
+    }
+    @include desktop-up {
+    }
+
+    &__inner {
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+    }
+
+    &__header {
+      color: $base_color_2;
+
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+    }
+
+    &__title {
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+
+      &-main {
+        font-family: $font-noto-serif-jp;
+        font-size: spx(111);
+        font-weight: 700;
+        line-height: spx(111);
+
+        @include tablet-up {
+          font-size: spx(111) * 0.75;
+          line-height: spx(111) * 0.75;
+        }
+
+        @include desktop-up {
+          font-size: ppx(145);
+          line-height: ppx(145);
+        }
+        @include tablet-up {
+        }
+        @include desktop-up {
+        }
+      }
+
+      &-sub {
+        font-family: $font-noto-sans-jp;
+        color: $base_color_2;
+        font-size: spx(27);
+        font-weight: 500;
+        line-height: 100%;
+        letter-spacing: spx(2.7);
+
+        @include tablet-up {
+          font-size: spx(27) * 0.75;
+          letter-spacing: spx(2.7) * 0.75;
+        }
+
+        @include desktop-up {
+          font-size: ppx(35);
+          letter-spacing: ppx(3.5);
+        }
+        @include tablet-up {
+        }
+        @include desktop-up {
+        }
+      }
+    }
+
+    &__content {
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+    }
+
+    &__text {
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+    }
+
+    &__catch {
+      font-family: $font-noto-serif-jp;
+      color: $base_color_white;
+      font-size: spx(69);
+      font-weight: 700;
+      line-height: 130%;
+      letter-spacing: spx(6.21);
+
+      @include tablet-up {
+        font-size: spx(69) * 0.75;
+        letter-spacing: spx(6.21) * 0.75;
+      }
+
+      @include desktop-up {
+        font-size: ppx(95);
+        letter-spacing: ppx(9.5);
+      }
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+    }
+
+    &__desc {
+      color: $base_color_white;
+      font-size: spx(31);
+      font-weight: 500;
+      line-height: 180%;
+
+      @include tablet-up {
+        font-size: spx(31) * 0.75;
+        line-height: 180%;
+      }
+
+      @include desktop-up {
+        font-size: ppx(35);
+        line-height: 200%;
+      }
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+    }
+
+    &__link {
+      color: $base_color_white;
+      font-size: spx(35);
+      font-weight: 500;
+      line-height: 100%;
+      letter-spacing: spx(1.75);
+
+      @include tablet-up {
+        font-size: spx(35) * 0.75;
+        letter-spacing: spx(1.75) * 0.75;
+      }
+
+      @include desktop-up {
+        font-size: ppx(35);
+        letter-spacing: ppx(1.75);
+      }
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+
+      &-icon {
+        --icon-size: #{spx(31)};
+
+        @include tablet-up {
+          --icon-size: #{spx(23)};
+        }
+        @include desktop-up {
+          --icon-size: #{ppx(28)};
+        }
+      }
+    }
+
+    &__figure {
+      @include tablet-up {
+      }
+      @include desktop-up {
+      }
+
+      img {
+        width: spx(602);
+        height: auto;
+
+        @include tablet-up {
+          width: spx(602) * 0.75;
+        }
+        @include desktop-up {
+          width: ppx(1000);
+        }
+      }
+    }
+  }
+</style>

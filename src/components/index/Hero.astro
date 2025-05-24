@@ -15,10 +15,10 @@ const imageData = Array.from({ length: 6 }, (_, i) => ({
 const heroImages = await Promise.all(
   imageData.map(async ({ number, alt }) => ({
     desktop: await import(
-      `../../assets/top/top-hero-slide${number}-desktop.png`
+      `../../assets/top/hero/slide${number}-desktop.png`
     ).then((m) => m.default),
     mobile: await import(
-      `../../assets/top/top-hero-slide${number}-mobile.png`
+      `../../assets/top/hero/slide${number}-mobile.png`
     ).then((m) => m.default),
     alt,
   }))

@@ -1,0 +1,38 @@
+---
+interface Props {
+  color?: string;
+  strokeWidth?: number;
+  className?: string;
+}
+
+const { color = 'white', strokeWidth = 4, className = '' } = Astro.props;
+---
+
+<svg
+  class={`arrow-icon ${className}`}
+  viewBox="0 0 35 32"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M2 30L16 16L2 2"
+    stroke={color}
+    stroke-width={strokeWidth}
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+  <path
+    d="M19 30L33 16L19 2"
+    stroke={color}
+    stroke-width={strokeWidth}
+    stroke-linecap="round"
+    stroke-linejoin="round"></path>
+</svg>
+
+<style>
+  .arrow-icon {
+    width: var(--icon-size, 32px);
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+  }
+</style>
