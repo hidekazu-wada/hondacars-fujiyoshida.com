@@ -9,7 +9,7 @@ import ArrowIcon from '../components/icons/ArrowIcon.astro';
 const sectionVisualWebp = await getImage({
   src: sectionVisualImage,
   format: 'webp',
-  widths: [360, 640, 1280, 1920],
+  widths: [375, 750, 1024, 1536, 2048],
 });
 ---
 
@@ -83,7 +83,7 @@ const sectionVisualWebp = await getImage({
     position: relative;
     padding: spx(130) 0;
     @include tablet-up {
-      padding: spx(130) * 0.75 0;
+      padding: ppx(271 * $pc-to-tab-ratio) 0 ppx(316 * $pc-to-tab-ratio);
     }
     @include desktop-up {
       padding: ppx(271) 0 ppx(316);
@@ -101,7 +101,7 @@ const sectionVisualWebp = await getImage({
       margin-left: spx(56);
 
       @include tablet-up {
-        margin-left: spx(56) * 0.75;
+        margin-left: ppx(1307 * $pc-to-tab-ratio);
       }
       @include desktop-up {
         margin-left: ppx(1307);
@@ -113,7 +113,7 @@ const sectionVisualWebp = await getImage({
       flex-direction: column;
       gap: spx(15);
       @include tablet-up {
-        gap: spx(15) * 0.75;
+        gap: ppx(20 * $pc-to-tab-ratio);
       }
       @include desktop-up {
         gap: ppx(20);
@@ -126,17 +126,13 @@ const sectionVisualWebp = await getImage({
         line-height: spx(111);
 
         @include tablet-up {
-          font-size: spx(111) * 0.75;
-          line-height: spx(111) * 0.75;
+          font-size: ppx(145 * $pc-to-tab-ratio);
+          line-height: ppx(145 * $pc-to-tab-ratio);
         }
 
         @include desktop-up {
           font-size: ppx(145);
           line-height: ppx(145);
-        }
-        @include tablet-up {
-        }
-        @include desktop-up {
         }
       }
 
@@ -152,9 +148,9 @@ const sectionVisualWebp = await getImage({
         gap: spx(23);
 
         @include tablet-up {
-          font-size: spx(27) * 0.75;
-          letter-spacing: spx(2.7) * 0.75;
-          gap: spx(23) * 0.75;
+          font-size: ppx(35 * $pc-to-tab-ratio);
+          letter-spacing: ppx(3.5 * $pc-to-tab-ratio);
+          gap: ppx(30 * $pc-to-tab-ratio);
         }
 
         @include desktop-up {
@@ -170,8 +166,8 @@ const sectionVisualWebp = await getImage({
           background-color: $base_color_2;
           margin-left: spx(4);
           @include tablet-up {
-            width: spx(153) * 0.75;
-            margin-left: spx(4) * 0.75;
+            width: ppx(200 * $pc-to-tab-ratio);
+            margin-left: ppx(11 * $pc-to-tab-ratio);
           }
           @include desktop-up {
             width: ppx(200);
@@ -192,8 +188,8 @@ const sectionVisualWebp = await getImage({
       margin-top: spx(50);
       margin-left: spx(60);
       @include tablet-up {
-        margin-top: spx(50) * 0.75;
-        margin-left: spx(60) * 0.75;
+        margin-left: ppx(1307 * $pc-to-tab-ratio);
+        margin-top: ppx(83 * $pc-to-tab-ratio);
       }
       @include desktop-up {
         margin-left: ppx(1307);
@@ -210,17 +206,13 @@ const sectionVisualWebp = await getImage({
       letter-spacing: spx(6.21);
 
       @include tablet-up {
-        font-size: spx(69) * 0.75;
-        letter-spacing: spx(6.21) * 0.75;
+        font-size: ppx(95 * $pc-to-tab-ratio);
+        letter-spacing: ppx(9.5 * $pc-to-tab-ratio);
       }
 
       @include desktop-up {
         font-size: ppx(95);
         letter-spacing: ppx(9.5);
-      }
-      @include tablet-up {
-      }
-      @include desktop-up {
       }
     }
 
@@ -233,10 +225,10 @@ const sectionVisualWebp = await getImage({
       width: spx(600);
 
       @include tablet-up {
-        font-size: spx(31) * 0.75;
-        line-height: 180%;
-        margin-top: spx(50) * 0.75;
-        width: spx(600) * 0.75;
+        font-size: ppx(35 * $pc-to-tab-ratio);
+        line-height: 200%;
+        margin-top: ppx(97 * $pc-to-tab-ratio);
+        width: ppx(874 * $pc-to-tab-ratio);
       }
 
       @include desktop-up {
@@ -245,19 +237,17 @@ const sectionVisualWebp = await getImage({
         margin-top: ppx(97);
         width: ppx(874);
       }
-      @include tablet-up {
-      }
-      @include desktop-up {
-      }
     }
 
     &__figure {
       text-align: center;
       @include tablet-up {
-      }
-      @include desktop-up {
         text-align: unset;
         position: absolute;
+        top: ppx(200 * $pc-to-tab-ratio);
+        left: 0;
+      }
+      @include desktop-up {
         top: ppx(200);
         left: 0;
       }
@@ -267,8 +257,8 @@ const sectionVisualWebp = await getImage({
         margin-top: spx(70);
 
         @include tablet-up {
-          width: spx(602) * 0.75;
-          margin-top: spx(70) * 0.75;
+          width: ppx(1000 * $pc-to-tab-ratio);
+          margin-top: 0;
         }
         @include desktop-up {
           width: ppx(1000);
@@ -297,13 +287,15 @@ const sectionVisualWebp = await getImage({
       margin-inline: auto;
 
       @include tablet-up {
-        font-size: spx(35) * 0.75;
-        letter-spacing: spx(1.75) * 0.75;
-        width: spx(484) * 0.75;
-        height: spx(120) * 0.75;
-        gap: spx(40) * 0.75;
-        padding-left: spx(80) * 0.75;
-        margin-top: spx(70) * 0.75;
+        font-size: ppx(35 * $pc-to-tab-ratio);
+        letter-spacing: ppx(1.75 * $pc-to-tab-ratio);
+        width: ppx(484 * $pc-to-tab-ratio);
+        height: ppx(120 * $pc-to-tab-ratio);
+        gap: ppx(40 * $pc-to-tab-ratio);
+        padding-left: ppx(80 * $pc-to-tab-ratio);
+        margin-top: ppx(40 * $pc-to-tab-ratio);
+        margin-inline: unset;
+        margin-left: ppx(1307 * $pc-to-tab-ratio);
       }
 
       @include desktop-up {

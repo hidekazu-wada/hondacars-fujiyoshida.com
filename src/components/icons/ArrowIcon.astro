@@ -39,10 +39,10 @@ const { color = 'white', strokeWidth = 4, className = '' } = Astro.props;
     vertical-align: middle;
 
     @include tablet-up {
-      width: spx(31) * 0.75;
+      width: ppx(31 * $pc-to-tab-ratio);
     }
     @include desktop-up {
-      width: ppx(31);
+      width: ppx(31 * $pc-to-tab-ratio);
     }
   }
 </style>
